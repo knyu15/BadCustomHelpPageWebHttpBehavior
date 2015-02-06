@@ -35,7 +35,10 @@ namespace BadCustomHelpPageWebHttpBehavior
             if (m_ignoredMethodNames == null || m_ignoredMethodNames.Length == 0)
                 return;
 
-            DispatchOperation helpOperation = endpointDispatcher.DispatchRuntime.Operations[2];
+            DispatchOperation helpOperation = endpointDispatcher.DispatchRuntime.Operations.FirstOrDefault(o => o.Name == "HelpPageInvoke");
+            if(helpOperation == null)
+                return;
+
             IOperationInvoker helpInvoker = helpOperation.Invoker;
 
             Type helpInvokerType = CreateInternalSystemServiceWebType("System.ServiceModel.Web.HelpOperationInvoker");
